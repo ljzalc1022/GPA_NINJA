@@ -14,9 +14,12 @@ class Game : public QWidget
 public:
     explicit Game(QWidget *parent = nullptr);
     ~Game();
+
+    void show();
     void closeEvent(QCloseEvent *e);
 
 signals:
+    void gameStart(Game*);
     void gameEnd();
 
 private:
