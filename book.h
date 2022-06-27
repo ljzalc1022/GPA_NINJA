@@ -10,13 +10,16 @@ class book: public QPushButton
     Q_OBJECT
 
 public:
-    explicit book(QWidget *parent=nullptr);
+    explicit book(QWidget *parent=nullptr, int id=-1);
+
+    int id;
 
     // return a bool to show whether has fallen
-    bool cal_pos(double &x, double &y, int timer);
+    void move(int timer);
 
     bool deleted;
     void deleteEvent();
+    void clickEvent();
 
 private:
     double x1, x2, a;
@@ -28,6 +31,7 @@ private:
 
 signals:
     void fallen();
+    void myClicked(int id);
 
 protected:
     virtual QSize sizeHint() const;

@@ -10,7 +10,6 @@ CONFIG += c++17
 
 SOURCES += \
     book.cpp \
-    book_controller.cpp \
     game.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,7 +17,6 @@ SOURCES += \
 
 HEADERS += \
     book.h \
-    book_controller.h \
     game.h \
     mainwindow.h \
     start.h
