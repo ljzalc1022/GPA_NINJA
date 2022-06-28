@@ -16,11 +16,14 @@ public:
     ~Game();
 
     void show();
+    void replay();
+    void endEvent();
     void closeEvent(QCloseEvent *e);
 
 signals:
     void gameStart(Game*);
     void gameEnd();
+    void gameClosed();
 
 private:
     Ui::Game *ui;

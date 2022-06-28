@@ -1,4 +1,5 @@
 #include "book.h"
+#include "game.h"
 #include "mainwindow.h"
 
 #include <QApplication>
@@ -13,6 +14,12 @@ std::vector<book*> on_screen;
 void game_over()
 {
     game_ended = true;
+
+    while(on_screen.size())
+    {
+        on_screen.back()->hide();
+        on_screen.pop_back();
+    }
 }
 void clickEvent(int id)
 {
@@ -38,8 +45,6 @@ void gaming(Game *g)
     static const int generation_rate = 30;
     static const int refresh_rate = 16;
 
-    on_screen.clear();
-
     QObject::connect(g, &Game::gameEnd, game_over);
 
     QTimer *m_Timer = new QTimer;
@@ -48,6 +53,8 @@ void gaming(Game *g)
         static int id = 0; // index of book
         static int timer = 0;
 
+        if(game_ended) timer = 0, game_ended = 0;
+
         ++timer;
         qDebug() << timer << ' ' << on_screen.size() << Qt::endl;
 
@@ -55,8 +62,7 @@ void gaming(Game *g)
         {
             book * new_item = new book(g, id++);
             on_screen.push_back(new_item);
-            QObject::connect(new_item, &book::fallen, game_over);
-            QObject::connect(new_item, &book::fallen, m_Timer, &QTimer::stop);
+            QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);
             QObject::connect(new_item, &book::myClicked, &clickEvent);
         }
         for(unsigned int i = 0; i < on_screen.size(); ++i)
@@ -64,6 +70,7 @@ void gaming(Game *g)
             on_screen[i]->move(timer * generation_rate);
         }
     });
+    QObject::connect(g, &Game::gameEnd, m_Timer, &QTimer::stop);
 }
 
 int main(int argc, char *argv[])
@@ -75,7 +82,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(&w, &MainWindow::gameStart, &g, &Game::show);
     QObject::connect(&g, &Game::gameStart, gaming);
-    QObject::connect(&g, &Game::gameEnd, &w, &QWidget::show);
+    QObject::connect(&g, &Game::gameClosed, &w, &QWidget::show);
 
     return a.exec();
 }
