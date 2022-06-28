@@ -9,7 +9,6 @@
 
 // to generate items
 bool game_ended;
-const int MAX_onscreen = 3; // max number of books on screen
 std::vector<book*> on_screen;
 void game_over()
 {
@@ -42,8 +41,8 @@ void T()
 void gaming(Game *g)
 {
     // time interval of item generation
-    static const int generation_rate = 30;
-    static const int refresh_rate = 16;
+    static const int generation_rate = 2500;
+    static const int refresh_rate = 2;
 
     QObject::connect(g, &Game::gameEnd, game_over);
 
@@ -55,19 +54,23 @@ void gaming(Game *g)
 
         if(game_ended) timer = 0, game_ended = 0;
 
-        ++timer;
-        qDebug() << timer << ' ' << on_screen.size() << Qt::endl;
-
-        if(timer % generation_rate == 0 && on_screen.size() < MAX_onscreen)
-        {
-            book * new_item = new book(g, id++);
-            on_screen.push_back(new_item);
-            QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);
-            QObject::connect(new_item, &book::myClicked, &clickEvent);
+        if(timer % generation_rate == 0 || !on_screen.size()){
+            int Number = rand() % 3 + 3;
+            while(Number --){
+                book * new_item = new book(g, id++, timer);
+                on_screen.push_back(new_item);
+                QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);
+                QObject::connect(new_item, &book::myClicked, &clickEvent);
+            }
+            timer = 0;
         }
+
+        ++timer;
+        //qDebug() << timer << ' ' << on_screen.size() << Qt::endl;
+
         for(unsigned int i = 0; i < on_screen.size(); ++i)
         {
-            on_screen[i]->move(timer * generation_rate);
+            on_screen[i]->move(timer);
         }
     });
     QObject::connect(g, &Game::gameEnd, m_Timer, &QTimer::stop);

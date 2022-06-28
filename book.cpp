@@ -7,13 +7,14 @@
 const int WIDTH = 1000;
 const int HEIGHT = 600;
 
-book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
+book::book(QWidget *parent, int id, int my_time) : QPushButton(parent), id(id), my_begin_time(my_time)
 {
     deleted = false;
 
     x1 = rand() % WIDTH;
-    x2 = rand() % WIDTH;
-    a = ((double)rand() / RAND_MAX) * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
+    if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
+    else x2 = rand() % (WIDTH / 2);
+    a = 0.3 * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
     if(x1 == x2) {
         if(x1 == 0) ++x2;
         else --x1;
@@ -23,9 +24,7 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
     dir = x1 < x2 ? 1 : -1;
 
     // total on-screen time could be 1s, 1.5s or 3s
-    v = (x2 - x1) * (double(rand() % 3 + 1) / 3);
-    v /= 1000;
-    v /= 10;
+    v = 1.0 * (x2 - x1) / (2500+rand()%490);
 
     // style of book
     setStyleSheet("background-color: red");
@@ -48,6 +47,7 @@ void book::deleteEvent()
 
 void book::move(int timer)
 {
+    timer -= my_begin_time;
     int x = x1 + timer * v;
     int y = - a * (x - x1) * (x - x2);
     if((dir == 1 && x > x2) || (dir == -1 && x < x2))

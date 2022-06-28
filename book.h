@@ -10,7 +10,7 @@ class book: public QPushButton
     Q_OBJECT
 
 public:
-    explicit book(QWidget *parent=nullptr, int id=-1);
+    explicit book(QWidget *parent=nullptr, int id=-1,int my_time=0);
 
     int id;
 
@@ -28,6 +28,8 @@ private:
     // speed
     int dir;
     // orientation
+    int my_begin_time;
+    // begin time
 
 signals:
     void fallen();
