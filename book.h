@@ -10,7 +10,7 @@ class book: public QPushButton
     Q_OBJECT
 
 public:
-    explicit book(QWidget *parent=nullptr, int id=-1,int my_time=0);
+    explicit book(QWidget *parent=nullptr, int id=-1, int my_time = 0);
 
     int id;
 

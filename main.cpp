@@ -41,7 +41,7 @@ void T()
 void gaming(Game *g)
 {
     // time interval of item generation
-    static const int generation_rate = 2500;
+    static const int generation_rate = 2400;
     static const int refresh_rate = 2;
 
     QObject::connect(g, &Game::gameEnd, game_over);
@@ -56,13 +56,12 @@ void gaming(Game *g)
 
         if(timer % generation_rate == 0 || !on_screen.size()){
             int Number = rand() % 3 + 3;
-            while(Number --){
+            while(Number -- && on_screen.size() < 10){
                 book * new_item = new book(g, id++, timer);
                 on_screen.push_back(new_item);
                 QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);
                 QObject::connect(new_item, &book::myClicked, &clickEvent);
             }
-            timer = 0;
         }
 
         ++timer;

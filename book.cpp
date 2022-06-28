@@ -14,10 +14,12 @@ book::book(QWidget *parent, int id, int my_time) : QPushButton(parent), id(id), 
     x1 = rand() % WIDTH;
     if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
     else x2 = rand() % (WIDTH / 2);
-    a = 0.3 * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
-    if(x1 == x2) {
-        if(x1 == 0) ++x2;
-        else --x1;
+    a = (0.75 + 0.1 * (rand()%10 / 10)) * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
+    while(x1 == x2){
+        x1 = rand() % WIDTH;
+        if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
+        else x2 = rand() % (WIDTH / 2);
+        a = (0.75 + 0.1 * (rand()%10 / 10)) * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
     }
 //    qDebug() << x1 << ' ' << x2 << ' ' << a << Qt::endl;
 
