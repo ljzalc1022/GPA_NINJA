@@ -10,12 +10,12 @@ class book: public QPushButton
     Q_OBJECT
 
 public:
-    explicit book(QWidget *parent=nullptr, int id=-1, int my_time = 0);
+    explicit book(QWidget *parent=nullptr, int id=-1);
 
     int id;
 
     // return a bool to show whether has fallen
-    void move(int timer);
+    void move(double add_rate);
 
     bool deleted;
     void deleteEvent();
@@ -28,7 +28,7 @@ private:
     // speed
     int dir;
     // orientation
-    int my_begin_time;
+    double my_time;
     // begin time
 
 signals:

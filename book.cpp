@@ -3,11 +3,12 @@
 #include <QThread>
 #include <QObject>
 #include <QDebug>
+#include <cmath>
 
 const int WIDTH = 1000;
 const int HEIGHT = 600;
 
-book::book(QWidget *parent, int id, int my_time) : QPushButton(parent), id(id), my_begin_time(my_time)
+book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
 {
     deleted = false;
 
@@ -15,7 +16,7 @@ book::book(QWidget *parent, int id, int my_time) : QPushButton(parent), id(id), 
     if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
     else x2 = rand() % (WIDTH / 2);
     a = (0.75 + 0.1 * (rand()%10 / 10)) * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
-    while(x1 == x2){
+    while( abs(x1-x2)<=100 ){
         x1 = rand() % WIDTH;
         if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
         else x2 = rand() % (WIDTH / 2);
@@ -26,7 +27,7 @@ book::book(QWidget *parent, int id, int my_time) : QPushButton(parent), id(id), 
     dir = x1 < x2 ? 1 : -1;
 
     // total on-screen time could be 1s, 1.5s or 3s
-    v = 1.0 * (x2 - x1) / (2500+rand()%490);
+    v = 1.0 * (x2 - x1) / (5000+rand()%999);
 
     // style of book
     setStyleSheet("background-color: red");
@@ -47,10 +48,10 @@ void book::deleteEvent()
     deleted = true;
 }
 
-void book::move(int timer)
+void book::move(double add_rate)
 {
-    timer -= my_begin_time;
-    int x = x1 + timer * v;
+    my_time +=add_rate;
+    int x = x1 + my_time * v;
     int y = - a * (x - x1) * (x - x2);
     if((dir == 1 && x > x2) || (dir == -1 && x < x2))
     {
