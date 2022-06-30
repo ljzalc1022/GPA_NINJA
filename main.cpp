@@ -1,6 +1,7 @@
 #include "book.h"
 #include "rank.h"
 #include "game.h"
+#include "confirm.h"
 #include "mainwindow.h"
 
 #include <bits/stdc++.h>
@@ -114,6 +115,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     Rank r;
     Game g;
+    Confirm c;
     w.show();
 
     QObject::connect(&w, &MainWindow::gameStart, &g, &Game::show);
@@ -125,6 +127,9 @@ int main(int argc, char *argv[])
 
     QObject::connect(&w, &MainWindow::OpenRank, &r, &Rank::show);
     QObject::connect(&r, &Rank::rankClosed, &w, &QWidget::show);
+
+    QObject::connect(&w, &MainWindow::tryclose, &c, &Confirm::show);
+    QObject::connect(&c, &Confirm::Closed ,&w, &MainWindow::die);
 
     rout=QDir::currentPath();
     return a.exec();

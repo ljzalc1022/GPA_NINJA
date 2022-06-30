@@ -21,6 +21,7 @@ public:
 signals:
     void gameStart();
     void OpenRank();
+    void tryclose();
 
 private slots:
     void on_pushButton_3_clicked();
@@ -30,10 +31,12 @@ private slots:
     void on_pushButton_2_clicked();
 
 public slots:
+    void die();
 
     void changecur();
 
     void resetcur();
+
 
 private:
     Ui::MainWindow *ui;

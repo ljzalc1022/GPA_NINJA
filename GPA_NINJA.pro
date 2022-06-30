@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     book.cpp \
+    confirm.cpp \
     game.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,12 +19,14 @@ SOURCES += \
 
 HEADERS += \
     book.h \
+    confirm.h \
     game.h \
     mainwindow.h \
     rank.h \
     start.h
 
 FORMS += \
+    confirm.ui \
     game.ui \
     rank.ui \
     mainwindow.ui
