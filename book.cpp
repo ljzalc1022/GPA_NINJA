@@ -22,16 +22,16 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
         if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
         else x2 = rand() % (WIDTH / 2);
         a = (0.75 + 0.1 * (rand()%10 / 10)) * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
-    }//Set the horizontal coordinates of the start and end points
+    }//Set the coeffiecncies of quandratic trajectory ramdomly
 
     dir = x1 < x2 ? 1 : -1;
 
     v = 1.0 * (x2 - x1) / (5000+rand()%999);
-    //Set speed
+    //Set speed randomly
 
     static const QString img[] = {":/piece_image/0.png)}", ":/piece_image/1.png)}"};
     setStyleSheet("QPushButton{border-image: url(" + img[rand() % 2]);
-    // style of book
+    // style of book, random book image
 
     QObject::connect(this, &book::clicked, this, &book::clickEvent);
     QObject::connect(this, &book::fallen, this, &book::deleteEvent);
@@ -39,8 +39,11 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
 
 void book::clickEvent()
 {
+    // avoiding malfunction caused by clicking a fading book
     if(deleted) return;
     deleted = true;
+
+    // add id to signal to help identifactino while removing
     emit myClicked(id);
 
     QPropertyAnimation *anime = new QPropertyAnimation(this, "geometry");
@@ -56,7 +59,7 @@ void book::deleteEvent()
 {
     this->hide();
     deleted = true;
-}//Eliminate events
+}//Eliminate events caused when one book falls
 
 void book::move(double add_rate)
 {

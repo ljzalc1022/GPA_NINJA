@@ -7,10 +7,11 @@ Game::Game(QWidget *parent) : QWidget(parent), ui(new Ui::Game)
     ui->setupUi(this);
     QObject::connect(this, &Game::gameStart, [=](){
         this->ui->verticalWidget->hide();
-    });
+    }); // hide game-over when it's not
 
     QObject::connect(this, &Game::gameEnd, this, &Game::endEvent);
-    QObject::connect(this->ui->pushButton, &QPushButton::clicked, this, &Game::replay);
+
+    QObject::connect(this->ui->pushButton, &QPushButton::clicked, this, &Game::replay); // replay button
 }//Main body of the game
 
 Game::~Game()

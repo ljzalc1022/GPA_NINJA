@@ -13,15 +13,19 @@ public:
     explicit Game(QWidget *parent = nullptr);
     ~Game();
 
+    // overriding show to emit gameStart signal
     void show();
+
     void replay();
-    void endEvent();
+
     void Clicked(int);
+
+    void endEvent();
     void closeEvent(QCloseEvent *e);
 signals:
-    void gameStart(Game*);
-    void gameEnd();
-    void gameClosed();
+    void gameStart(Game*); // to play and replay
+    void gameEnd();    // one game overs a.k.a one book falls
+    void gameClosed(); // the game window being closed
 
 private:
     Ui::Game *ui;
