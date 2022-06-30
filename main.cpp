@@ -20,7 +20,6 @@ using namespace std;
 int numbers;
 bool game_ended;
 std::vector<book*> on_screen;
-std::vector<book*> delete_screen;
 
 void game_over()
 {
@@ -30,9 +29,10 @@ void game_over()
     {
         on_screen.back()->hide();
         on_screen.pop_back();
-    }
+    }// Delete book
 
-}
+}// game over
+
 void clickEvent(int id)
 {
     int pos = -1;
@@ -43,14 +43,16 @@ void clickEvent(int id)
             pos = i;
             break;
         }
-    }
+    }// Find deleted books
     std::swap(on_screen[pos], on_screen[on_screen.size() - 1]);
-    on_screen.pop_back(); ++numbers; //cerr<<"bingo "<<numbers<<endl;
-}
+    on_screen.pop_back(); ++numbers;// Score increase
+}// The event of click
+
 void T()
 {
     qDebug() << "running" << Qt::endl;
 }
+
 QString rout;
 void memorying(){
     QDateTime current_date_time =QDateTime::currentDateTime();
@@ -72,8 +74,8 @@ void memorying(){
 void gaming(Game *g)
 {
     // time interval of item generation
-    static const int generation_rate = 500;
-    static const int refresh_rate = 1;
+    static const int generation_rate = 500;// Frequency of book occurrences
+    static const int refresh_rate = 1;// refresh rate
 
     QObject::connect(g, &Game::gameEnd, game_over);
 
@@ -81,7 +83,7 @@ void gaming(Game *g)
     m_Timer->start(refresh_rate);
     QObject::connect(m_Timer, &QTimer::timeout, [=](){
         static int id = 0; // index of book
-        static int timer = 0;
+        static int timer = 0;// time
         static double v_up=1; // acceleration of speed
 
         if(game_ended) timer = 0, game_ended = 0, v_up = 1;
@@ -91,11 +93,11 @@ void gaming(Game *g)
             while(Number -- && on_screen.size() < 6){
                 book * new_item = new book(g, id++);
                 on_screen.push_back(new_item);
-                QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);
+                QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);//Connect fallen and gameend
                 QObject::connect(new_item, &book::myClicked, &clickEvent);
                 QObject::connect(new_item, &book::myClicked, g, &Game::Clicked);
             }
-        }
+        }//Generate new books
 
         ++timer;
         if(timer % (generation_rate * 10) == 0) v_up += 0.5;
@@ -119,9 +121,9 @@ int main(int argc, char *argv[])
     w.show();
 
     QObject::connect(&w, &MainWindow::gameStart, &g, &Game::show);
-    QObject::connect(&g, &Game::gameStart, &w, &MainWindow::changecur);
+    QObject::connect(&g, &Game::gameStart, &w, &MainWindow::changecur);//Mouse shape change
     QObject::connect(&g, &Game::gameStart, gaming);
-    QObject::connect(&g, &Game::gameClosed, &w, &MainWindow::resetcur);
+    QObject::connect(&g, &Game::gameClosed, &w, &MainWindow::resetcur);//Mouse shape Recovery
     QObject::connect(&g, &Game::gameClosed, &w, &QWidget::show);
     QObject::connect(&g, &Game::gameClosed, memorying);
 

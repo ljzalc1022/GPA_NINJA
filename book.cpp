@@ -31,7 +31,6 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
 
     static const QString img[] = {":/piece_image/0.png)}", ":/piece_image/1.png)}"};
     setStyleSheet("QPushButton{border-image: url(" + img[rand() % 2]);
-//    setStyleSheet("QPushButton {background-color: red}");
     // style of book
 
     QObject::connect(this, &book::clicked, this, &book::clickEvent);
@@ -43,11 +42,13 @@ void book::clickEvent()
     if(deleted) return;
     deleted = true;
     emit myClicked(id);
+
     QPropertyAnimation *anime = new QPropertyAnimation(this, "geometry");
     anime->setDuration(1000);
     anime->setStartValue(QRect(now_x, HEIGHT - now_y, 80, 100));
     anime->setEndValue(QRect(now_x, HEIGHT - now_y, 0, 0));
-    anime->start();
+    anime->start();//Disappearing animation effect
+
     QObject::connect(anime, &QPropertyAnimation::finished, this, &QPushButton::close);
 }//Click events
 
@@ -61,11 +62,11 @@ void book::move(double add_rate)
 {
     my_time +=add_rate;
     now_x = x1 + my_time * v;
-    now_y = - a * (now_x - x1) * (now_x - x2);
+    now_y = - a * (now_x - x1) * (now_x - x2);//Current location
     if((dir == 1 && now_x > x2) || (dir == -1 && now_x < x2))
     {
         emit fallen();
-    }
+    }//Determining whether to fall
     else
     {
         QPushButton::setGeometry(now_x, HEIGHT - now_y, 80, 100);
@@ -73,7 +74,3 @@ void book::move(double add_rate)
     }
 }//Move events
 
-//QSize book::sizeHint() const
-//{
-//    return QSize(80, 100);
-//}//size of book

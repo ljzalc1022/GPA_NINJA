@@ -11,7 +11,7 @@ Confirm::Confirm(QWidget *parent) : QWidget(parent), ui(new Ui::Confirm)
     ui->setupUi(this);
     QObject::connect(this->ui->pushButton_2,&QPushButton::clicked,this,&Confirm::closing);
     QObject::connect(this->ui->pushButton,&QPushButton::clicked,this,&Confirm::back);
-}
+}//Interface for dissuasion
 
 Confirm::~Confirm()
 {

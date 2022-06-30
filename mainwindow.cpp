@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QApplication::setOverrideCursor(QCursor(QPixmap(":/cursor/2.cur")));
+    QApplication::setOverrideCursor(QCursor(QPixmap(":/cursor/2.cur")));//set mouse shape
 }
 
 MainWindow::~MainWindow()
@@ -18,11 +18,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::changecur(){
     QApplication::setOverrideCursor(QCursor(QPixmap(":/cursor/3.cur")));
-}
+}//Mouse shape change
 
 void MainWindow::resetcur(){
     QApplication::setOverrideCursor(QCursor(QPixmap(":/cursor/2.cur")));
-}
+}//Mouse shape Recovery
 
 void MainWindow::on_pushButton_clicked()
 {

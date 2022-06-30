@@ -11,7 +11,7 @@ Game::Game(QWidget *parent) : QWidget(parent), ui(new Ui::Game)
 
     QObject::connect(this, &Game::gameEnd, this, &Game::endEvent);
     QObject::connect(this->ui->pushButton, &QPushButton::clicked, this, &Game::replay);
-}
+}//Main body of the game
 
 Game::~Game()
 {
