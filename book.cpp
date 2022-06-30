@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QObject>
 #include <QDebug>
+#include <QPropertyAnimation>
 #include <cmath>
 
 const int WIDTH = 1000;
@@ -28,7 +29,9 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
     v = 1.0 * (x2 - x1) / (5000+rand()%999);
     //Set speed
 
-    setStyleSheet("background-color: red");
+    static const QString img[] = {":/piece_image/0.png)}", ":/piece_image/1.png)}"};
+    setStyleSheet("QPushButton{border-image: url(" + img[rand() % 2]);
+//    setStyleSheet("QPushButton {background-color: red}");
     // style of book
 
     QObject::connect(this, &book::clicked, this, &book::clickEvent);
@@ -38,7 +41,12 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
 void book::clickEvent()
 {
     emit myClicked(id);
-    this->hide();
+    QPropertyAnimation *anime = new QPropertyAnimation(this, "geometry");
+    anime->setDuration(1000);
+    anime->setStartValue(QRect(now_x, HEIGHT - now_y, 80, 100));
+    anime->setEndValue(QRect(now_x, HEIGHT - now_y, 0, 0));
+    anime->start();
+    QObject::connect(anime, &QPropertyAnimation::finished, this, &QPushButton::close);
 }//Click events
 
 void book::deleteEvent()
@@ -50,20 +58,20 @@ void book::deleteEvent()
 void book::move(double add_rate)
 {
     my_time +=add_rate;
-    int x = x1 + my_time * v;
-    int y = - a * (x - x1) * (x - x2);
-    if((dir == 1 && x > x2) || (dir == -1 && x < x2))
+    now_x = x1 + my_time * v;
+    now_y = - a * (now_x - x1) * (now_x - x2);
+    if((dir == 1 && now_x > x2) || (dir == -1 && now_x < x2))
     {
         emit fallen();
     }
     else
     {
-        QPushButton::move(x, HEIGHT - y);
+        QPushButton::setGeometry(now_x, HEIGHT - now_y, 80, 100);
         this->show();
     }
 }//Move events
 
-QSize book::sizeHint() const
-{
-    return QSize(80, 100);
-}//size of book
+//QSize book::sizeHint() const
+//{
+//    return QSize(80, 100);
+//}//size of book

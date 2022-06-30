@@ -10,18 +10,6 @@
 // to generate items
 bool game_ended;
 std::vector<book*> on_screen;
-std::vector<book*> delete_screen;
-
-void setButtonImage(book *button, QString image)
-{
-    button->setText("");
-    QPixmap pixmap(image);
-    QPixmap fitpixmap = pixmap.scaled(145, 99, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    button->setIcon(QIcon(fitpixmap));
-    button->setIconSize(QSize(145, 99));
-    button->setFlat(true);
-    button->setStyleSheet("border: 0px"); //消除边框
-}
 
 void game_over()
 {
@@ -32,11 +20,6 @@ void game_over()
         on_screen.back()->hide();
         on_screen.pop_back();
     }//Emptying books
-    while(delete_screen.size())
-    {
-        delete_screen.back()->hide();
-        delete_screen.pop_back();
-    }//Emptying pieces
 }//game over
 
 void clickEvent(int id)
@@ -51,13 +34,6 @@ void clickEvent(int id)
         }
     }
     std::swap(on_screen[pos], on_screen[on_screen.size() - 1]);
-
-    delete_screen.push_back(on_screen.back());
-    setButtonImage(delete_screen.back(),":/piece_image/0.png");
-    //delete_screen.back()->setStyleSheet("background-color: yellow");//碎片样式
-    delete_screen.back()->setEnabled(false);
-    //Books in pieces
-
     on_screen.pop_back();
 }//Click to eliminate
 
@@ -103,18 +79,6 @@ void gaming(Game *g)
         {
             on_screen[i]->move(v_up);
         }//move of book
-
-        while(delete_screen.size() > 10)
-        {
-            delete_screen[0]->hide();
-            std::swap(delete_screen[0],delete_screen.back());
-            delete_screen.pop_back();
-        }//Limit the number of pieces
-
-        for(unsigned int i = 0; i < delete_screen.size(); ++i)
-        {
-            delete_screen[i]->move(0);
-        }//Show pieces
     });
     QObject::connect(g, &Game::gameEnd, m_Timer, &QTimer::stop);
 }

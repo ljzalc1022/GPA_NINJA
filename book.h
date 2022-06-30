@@ -31,10 +31,12 @@ private:
     double my_time;
     // begin time
 
+    int now_x, now_y; // current position
+
 signals:
     void fallen();
     void myClicked(int id);
 
-protected:
-    virtual QSize sizeHint() const;
+//protected:
+//    virtual QSize sizeHint() const;
 };
