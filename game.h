@@ -3,9 +3,7 @@
 
 #include <QWidget>
 
-namespace Ui {
-class Game;
-}
+namespace Ui {class Game;}
 
 class Game : public QWidget
 {
@@ -18,8 +16,8 @@ public:
     void show();
     void replay();
     void endEvent();
+    void Clicked(int);
     void closeEvent(QCloseEvent *e);
-
 signals:
     void gameStart(Game*);
     void gameEnd();
