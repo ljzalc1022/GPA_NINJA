@@ -13,11 +13,11 @@ public:
     explicit Confirm(QWidget *parent = nullptr);
     ~Confirm();
 
-    void show();
-    void closing();
-    void back();
+    void show();//to show the confirming widget
+    void closing();//when the user wants to close,execute this function
+    void back();//when the user wants to go back,execute this function
 signals:
-    void Closed();
+    void Closed();//closed signal,to tell MainWindow to close
 private:
     Ui::Confirm *ui;
 };

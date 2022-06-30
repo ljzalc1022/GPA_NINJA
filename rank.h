@@ -13,11 +13,11 @@ public:
     explicit Rank(QWidget *parent = nullptr);
     ~Rank();
 
-    void show();
-    void rankclose();
+    void show();//to show the rank list
+    void rankclose();//to hide rank list and tell MainWindow to show again
 
 signals:
-    void rankClosed();
+    void rankClosed();//closed signal,to tell MainWindow to show
 
 private:
     Ui::Rank *ui;

@@ -9,8 +9,8 @@ using namespace std;
 Confirm::Confirm(QWidget *parent) : QWidget(parent), ui(new Ui::Confirm)
 {
     ui->setupUi(this);
-    QObject::connect(this->ui->pushButton_2,&QPushButton::clicked,this,&Confirm::closing);
-    QObject::connect(this->ui->pushButton,&QPushButton::clicked,this,&Confirm::back);
+    QObject::connect(this->ui->pushButton_2,&QPushButton::clicked,this,&Confirm::closing);//"close" button
+    QObject::connect(this->ui->pushButton,&QPushButton::clicked,this,&Confirm::back);//"back" button
 }//Interface for dissuasion
 
 Confirm::~Confirm()
@@ -24,10 +24,10 @@ void Confirm::show()
 }
 
 void Confirm::closing(){
-    emit Closed();
+    emit Closed();//to tell MainWindow to close
     close();
 }
 
 void Confirm::back(){
-    close();
+    close();//no matter what the choice is,the confirm window should be closed
 }

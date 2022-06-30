@@ -56,18 +56,21 @@ void clickEvent(int id)
 QString rout;
 void memorying(){
     QDateTime current_date_time =QDateTime::currentDateTime();
-    QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss ddd");
+    QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss ddd");//get the date and time string
+
     QFile f(rout+"/grade.txt");
     f.open(QIODevice::Append|QIODevice::Text);
-    QTextStream fout(&f);
+    QTextStream fout(&f);                                             //qfile operations
+
     QByteArray cdata = current_date.toLocal8Bit();
-    std::string cstr = std::string(cdata);
+    std::string cstr = std::string(cdata);                            //get the score stirng
+
     fout.setFieldAlignment(QTextStream::AlignRight);
     fout.setFieldWidth(10);
     fout.setPadChar('0');
     fout<<numbers;
     fout.setFieldWidth(0);
-    fout<<" "<<QString::fromStdString(cstr)<<"\n";
+    fout<<" "<<QString::fromStdString(cstr)<<"\n";                    //set the form of the string and output
     f.close();
     numbers=0;
 }
@@ -130,13 +133,13 @@ int main(int argc, char *argv[])
 
     QObject::connect(&g, &Game::gameStart, gaming); // start game
 
-    QObject::connect(&g, &Game::gameClosed, memorying);
+    QObject::connect(&g, &Game::gameClosed, memorying);//if exit unusually,check the score and update the rank
 
-    QObject::connect(&w, &MainWindow::OpenRank, &r, &Rank::show);
-    QObject::connect(&r, &Rank::rankClosed, &w, &QWidget::show);
+    QObject::connect(&w, &MainWindow::OpenRank, &r, &Rank::show);//open the rank list
+    QObject::connect(&r, &Rank::rankClosed, &w, &QWidget::show);//close the rank list and come back
 
-    QObject::connect(&w, &MainWindow::tryclose, &c, &Confirm::show);
-    QObject::connect(&c, &Confirm::Closed ,&w, &MainWindow::die);
+    QObject::connect(&w, &MainWindow::tryclose, &c, &Confirm::show);//open the confirming window if the user wants to exit
+    QObject::connect(&c, &Confirm::Closed ,&w, &MainWindow::die);//exit
 
     rout=QDir::currentPath();
     return a.exec();

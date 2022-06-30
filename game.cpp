@@ -19,7 +19,7 @@ Game::~Game()
     delete ui;
 }
 
-void Game::show()
+void Game::show()//initial show of the counter
 {
     QWidget::show();
     emit gameStart(this);
@@ -29,10 +29,9 @@ void Game::show()
 }
 
 int number;
-void Game::Clicked(int id)
+void Game::Clicked(int id)//when click,add the number for the counter
 {
     ++number;
-    //std::cerr<<"clicked"<<number<<std::endl;
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
     ui->textBrowser_2->setText(QString::fromStdString("已修: "+std::to_string(number)+"门课"));
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
@@ -44,7 +43,7 @@ void Game::replay()
     emit gameStart(this);
 }
 
-void Game::endEvent()
+void Game::endEvent()//when end,set the number to zero
 {
     number=0;
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
