@@ -8,8 +8,10 @@
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
-#include <Qtime>
-#include <Qdate>
+#include <QTime>
+#include <QDate>
+#include <QFile>
+#include <QDir>
 
 using namespace std;
 
@@ -47,6 +49,24 @@ void clickEvent(int id)
 void T()
 {
     qDebug() << "running" << Qt::endl;
+}
+QString rout;
+void memorying(){
+    QDateTime current_date_time =QDateTime::currentDateTime();
+    QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss ddd");
+    QFile f(rout+"/grade.txt");
+    f.open(QIODevice::Append|QIODevice::Text);
+    QTextStream fout(&f);
+    QByteArray cdata = current_date.toLocal8Bit();
+    std::string cstr = std::string(cdata);
+    fout.setFieldAlignment(QTextStream::AlignRight);
+    fout.setFieldWidth(10);
+    fout.setPadChar('0');
+    fout<<numbers;
+    fout.setFieldWidth(0);
+    fout<<" "<<QString::fromStdString(cstr)<<"\n";
+    f.close();
+    numbers=0;
 }
 void gaming(Game *g)
 {
@@ -86,19 +106,8 @@ void gaming(Game *g)
         }//move of book
     });
     QObject::connect(g, &Game::gameEnd, m_Timer, &QTimer::stop);
-
+    memorying();
 }
-void memorying(){
-    QDateTime current_date_time =QDateTime::currentDateTime();
-    QString current_date =current_date_time.toString("yyyy.MM.dd hh:mm:ss ddd");
-    std::ofstream fout("C:\\Users\\Yxs\\Desktop\\GPA_NINJA-nufukim-patch-1\\grade.txt",ios::app);
-    QByteArray cdata = current_date.toLocal8Bit();
-    std::string cstr = std::string(cdata);
-    fout<<setw(10)<<setfill('0')<<numbers<<' '<<cstr<<endl;
-    fout.close();
-    numbers=0;
-}
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -117,5 +126,6 @@ int main(int argc, char *argv[])
     QObject::connect(&w, &MainWindow::OpenRank, &r, &Rank::show);
     QObject::connect(&r, &Rank::rankClosed, &w, &QWidget::show);
 
+    rout=QDir::currentPath();
     return a.exec();
 }

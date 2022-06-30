@@ -22,6 +22,9 @@ void Game::show()
 {
     QWidget::show();
     emit gameStart(this);
+    ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
+    ui->textBrowser_2->setText(QString::fromStdString("准备好！"));
+    ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
 }
 
 int number;
@@ -30,7 +33,7 @@ void Game::Clicked(int id)
     ++number;
     //std::cerr<<"clicked"<<number<<std::endl;
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
-    ui->textBrowser_2->setText(QString::fromStdString("Score: "+std::to_string(number)));
+    ui->textBrowser_2->setText(QString::fromStdString("已修: "+std::to_string(number)+"门课"));
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
 }
 
@@ -42,6 +45,7 @@ void Game::replay()
 
 void Game::endEvent()
 {
+    number=0;
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
     ui->textBrowser_2->setText(QString::fromStdString("寄！"));
     ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
@@ -49,5 +53,6 @@ void Game::endEvent()
 }
 
 void Game::closeEvent(QCloseEvent *e) {
+    number=0;
     emit gameClosed();
 }
