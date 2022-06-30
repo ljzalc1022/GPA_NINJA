@@ -12,12 +12,15 @@ class book: public QPushButton
 public:
     explicit book(QWidget *parent=nullptr, int id=-1);
 
+    // to help removing
     int id;
 
-    // return a bool to show whether has fallen
+    // update positon
     void move(double add_rate);
 
+    // avoiding malfunction caused by clicking a fading book
     bool deleted;
+
     void deleteEvent();
     void clickEvent();
 
@@ -36,7 +39,4 @@ private:
 signals:
     void fallen();
     void myClicked(int id);
-
-//protected:
-//    virtual QSize sizeHint() const;
 };

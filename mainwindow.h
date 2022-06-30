@@ -24,11 +24,11 @@ signals:
     void tryclose();
 
 private slots:
-    void on_pushButton_3_clicked();
+    void on_pushButton_clicked(); // start game
 
-    void on_pushButton_clicked();
+    void on_pushButton_2_clicked(); // look up rank
 
-    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked(); // exit
 
 public slots:
     void die();
