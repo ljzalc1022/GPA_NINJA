@@ -33,6 +33,7 @@ void clickEvent(int id)
             break;
         }
     }
+    qDebug() << "pos " << pos << Qt::endl;
     std::swap(on_screen[pos], on_screen[on_screen.size() - 1]);
     on_screen.pop_back();
 }//Click to eliminate
@@ -48,7 +49,7 @@ void T()
 void gaming(Game *g)
 {
     // time interval of item generation
-    static const int generation_rate = 5000;
+    static const int generation_rate = 500;
     static const int refresh_rate = 1;
 
     QObject::connect(g, &Game::gameEnd, game_over);
@@ -64,6 +65,7 @@ void gaming(Game *g)
         if(timer % (generation_rate+1000) == generation_rate || !on_screen.size()){
             int Number = rand() % 3 + 2;
             while(Number -- && on_screen.size() < 6){
+                qDebug() << id << Qt::endl;
                 book * new_item = new book(g, id++);
                 on_screen.push_back(new_item);
                 QObject::connect(new_item, &book::fallen, g, &Game::gameEnd);
@@ -79,6 +81,8 @@ void gaming(Game *g)
         {
             on_screen[i]->move(v_up);
         }//move of book
+
+//        qDebug() << on_screen.size() << Qt::endl;
     });
     QObject::connect(g, &Game::gameEnd, m_Timer, &QTimer::stop);
 }

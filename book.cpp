@@ -40,6 +40,8 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
 
 void book::clickEvent()
 {
+    if(deleted) return;
+    deleted = true;
     emit myClicked(id);
     QPropertyAnimation *anime = new QPropertyAnimation(this, "geometry");
     anime->setDuration(1000);
