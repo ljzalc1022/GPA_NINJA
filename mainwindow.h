@@ -29,6 +29,12 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+public slots:
+
+    void changecur();
+
+    void resetcur();
+
 private:
     Ui::MainWindow *ui;
 };

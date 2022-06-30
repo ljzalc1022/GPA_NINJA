@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>cursor/Cross.cur</file>
+        <file>cursor/2.cur</file>
+        <file>cursor/3.cur</file>
     </qresource>
 </RCC>
