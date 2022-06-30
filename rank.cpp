@@ -22,7 +22,7 @@ void Rank::rankclose(){
 void Rank::show()
 {
     QWidget::show();
-    std::ifstream fin("C:\\Users\\Yxs\\Desktop\\GPA_NINJA-nufukim-patch-1\\grade.txt");
+    std::ifstream fin(":/grade/grade.txt");
     char ch[50];
     vector<string>v;
     while(1){
