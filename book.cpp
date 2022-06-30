@@ -21,16 +21,15 @@ book::book(QWidget *parent, int id) : QPushButton(parent), id(id)
         if(x1 < WIDTH / 2) x2 = WIDTH / 2 + rand() % (WIDTH / 2);
         else x2 = rand() % (WIDTH / 2);
         a = (0.75 + 0.1 * (rand()%10 / 10)) * (HEIGHT / ((x2 - x1) * (x2 - x1) / 4));
-    }
-//    qDebug() << x1 << ' ' << x2 << ' ' << a << Qt::endl;
+    }//Set the horizontal coordinates of the start and end points
 
     dir = x1 < x2 ? 1 : -1;
 
-    // total on-screen time could be 1s, 1.5s or 3s
     v = 1.0 * (x2 - x1) / (5000+rand()%999);
+    //Set speed
 
-    // style of book
     setStyleSheet("background-color: red");
+    // style of book
 
     QObject::connect(this, &book::clicked, this, &book::clickEvent);
     QObject::connect(this, &book::fallen, this, &book::deleteEvent);
@@ -40,13 +39,13 @@ void book::clickEvent()
 {
     emit myClicked(id);
     this->hide();
-}
+}//Click events
+
 void book::deleteEvent()
 {
-//   qDebug() << "hidden" << Qt::endl;
     this->hide();
     deleted = true;
-}
+}//Eliminate events
 
 void book::move(double add_rate)
 {
@@ -61,11 +60,10 @@ void book::move(double add_rate)
     {
         QPushButton::move(x, HEIGHT - y);
         this->show();
-//        qDebug() << "show" << ' ' << x << ' ' << y << Qt::endl;
     }
-}
+}//Move events
 
 QSize book::sizeHint() const
 {
     return QSize(80, 100);
-}
+}//size of book
