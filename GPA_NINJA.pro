@@ -40,3 +40,5 @@ RESOURCES += \
     cursor.qrc \
     images.qrc \
     pieces.qrc
+
+RC_FILE   +=logo.rc

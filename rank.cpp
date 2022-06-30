@@ -1,5 +1,7 @@
 #include "rank.h"
 #include "ui_rank.h"
+#include<QDir>
+#include<QFile>
 #include<bits/stdc++.h>
 #include<QTableWidgetItem>
 using namespace std;
@@ -22,15 +24,17 @@ void Rank::rankclose(){
 void Rank::show()
 {
     QWidget::show();
-    std::ifstream fin("C:\\Users\\Yxs\\Desktop\\GPA_NINJA-nufukim-patch-1\\grade.txt");
-    char ch[50];
+
+    QFile f(QDir::currentPath()+"/grade.txt");
+    f.open(QIODevice::ReadOnly|QIODevice::Text);
+    QTextStream fin(&f);
+    QString str;
+
     vector<string>v;
-    while(1){
-        memset(ch,0,sizeof ch);
-        fin.getline(ch,50);
-        string s=ch;
-        if(s=="") break;
-        v.push_back(s);
+    while(!fin.atEnd()){
+        str=fin.readLine();
+        if(str=="") break;
+        v.push_back(str.toStdString());
     }
     sort(v.begin(),v.end(),greater<string>());
     ui->tableWidget->setColumnCount(2);
@@ -44,4 +48,5 @@ void Rank::show()
         string tmp=v[i]; tmp.erase(0,10);
         ui->tableWidget->setItem(i,1,new QTableWidgetItem(QString::fromStdString(tmp)));
     }
+    f.close();
 }
