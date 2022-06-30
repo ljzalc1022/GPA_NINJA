@@ -108,7 +108,9 @@ int main(int argc, char *argv[])
     w.show();
 
     QObject::connect(&w, &MainWindow::gameStart, &g, &Game::show);
+    QObject::connect(&g, &Game::gameStart, &w, &MainWindow::changecur);
     QObject::connect(&g, &Game::gameStart, gaming);
+    QObject::connect(&g, &Game::gameClosed, &w, &MainWindow::resetcur);
     QObject::connect(&g, &Game::gameClosed, &w, &QWidget::show);
     QObject::connect(&g, &Game::gameClosed, memorying);
 
