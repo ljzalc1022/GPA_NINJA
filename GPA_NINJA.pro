@@ -38,5 +38,6 @@ DISTFILES += \
 
 RESOURCES += \
     cursor.qrc \
+    grade.qrc \
     images.qrc \
     pieces.qrc

@@ -8,8 +8,9 @@
 #include <QObject>
 #include <QTimer>
 #include <QDebug>
-#include <Qtime>
-#include <Qdate>
+#include <QTime>
+#include <QDate>
+#include <QFile>
 
 using namespace std;
 
@@ -114,6 +115,11 @@ int main(int argc, char *argv[])
 
     QObject::connect(&w, &MainWindow::OpenRank, &r, &Rank::show);
     QObject::connect(&r, &Rank::rankClosed, &w, &QWidget::show);
+
+    QFile f(":/grade/grade.txt");
+    if(!f.open(QIODevice::Append|QIODevice::Text)) cerr<<"???\n";
+    QTextStream fout(&f);
+    fout<<"write successfully\n";
 
     return a.exec();
 }
