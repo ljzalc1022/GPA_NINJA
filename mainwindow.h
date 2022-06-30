@@ -20,6 +20,7 @@ public:
 
 signals:
     void gameStart();
+    void OpenRank();
 
 private slots:
     void on_pushButton_3_clicked();
@@ -31,6 +32,4 @@ private slots:
 private:
     Ui::MainWindow *ui;
 };
-
-
 #endif // MAINWINDOW_H

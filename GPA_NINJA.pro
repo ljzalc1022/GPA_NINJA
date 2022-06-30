@@ -13,16 +13,19 @@ SOURCES += \
     game.cpp \
     main.cpp \
     mainwindow.cpp \
+    rank.cpp \
     start.cpp
 
 HEADERS += \
     book.h \
     game.h \
     mainwindow.h \
+    rank.h \
     start.h
 
 FORMS += \
     game.ui \
+    rank.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -34,6 +37,4 @@ DISTFILES += \
     juan.png
 
 RESOURCES += \
-    cursor.qrc \
-    images.qrc \
-    pieces.qrc
+    images.qrc

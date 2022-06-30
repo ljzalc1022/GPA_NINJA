@@ -1,5 +1,6 @@
 #include "game.h"
 #include "ui_game.h"
+#include<bits/stdc++.h>
 
 Game::Game(QWidget *parent) : QWidget(parent), ui(new Ui::Game)
 {
@@ -23,13 +24,27 @@ void Game::show()
     emit gameStart(this);
 }
 
+int number;
+void Game::Clicked(int id)
+{
+    ++number;
+    //std::cerr<<"clicked"<<number<<std::endl;
+    ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
+    ui->textBrowser_2->setText(QString::fromStdString("Score: "+std::to_string(number)));
+    ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
+}
+
 void Game::replay()
 {
+    number=0;
     emit gameStart(this);
 }
 
 void Game::endEvent()
 {
+    ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
+    ui->textBrowser_2->setText(QString::fromStdString("寄！"));
+    ui->textBrowser_2->setCurrentFont(QFont("Microsoft YaHei UI",18));
     ui->verticalWidget->show();
 }
 
