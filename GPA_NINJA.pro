@@ -37,4 +37,6 @@ DISTFILES += \
     juan.png
 
 RESOURCES += \
-    images.qrc
+    cursor.qrc \
+    images.qrc \
+    pieces.qrc

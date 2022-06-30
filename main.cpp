@@ -29,11 +29,6 @@ void game_over()
         on_screen.pop_back();
     }
 
-    while(delete_screen.size())
-    {
-        delete_screen.back()->hide();
-        delete_screen.pop_back();
-    }//Emptying pieces
 }
 void clickEvent(int id)
 {
@@ -47,16 +42,7 @@ void clickEvent(int id)
         }
     }
     std::swap(on_screen[pos], on_screen[on_screen.size() - 1]);
-
-    delete_screen.push_back(on_screen.back());
-    //setButtonImage(delete_screen.back(),":/piece_image/0.png");
-    delete_screen.back()->setStyleSheet("background-color: yellow");//碎片样式
-    delete_screen.back()->setEnabled(false);
-    //Books in pieces
-
-
     on_screen.pop_back(); ++numbers; //cerr<<"bingo "<<numbers<<endl;
-
 }
 void T()
 {
@@ -65,7 +51,7 @@ void T()
 void gaming(Game *g)
 {
     // time interval of item generation
-    static const int generation_rate = 5000;
+    static const int generation_rate = 500;
     static const int refresh_rate = 1;
 
     QObject::connect(g, &Game::gameEnd, game_over);
@@ -98,18 +84,6 @@ void gaming(Game *g)
         {
             on_screen[i]->move(v_up);
         }//move of book
-
-        while(delete_screen.size() > 10)
-        {
-            delete_screen[0]->hide();
-            std::swap(delete_screen[0],delete_screen.back());
-            delete_screen.pop_back();
-        }//Limit the number of pieces
-
-        for(unsigned int i = 0; i < delete_screen.size(); ++i)
-        {
-            delete_screen[i]->move(0);
-        }//Show pieces
     });
     QObject::connect(g, &Game::gameEnd, m_Timer, &QTimer::stop);
 
