@@ -1,16 +1,23 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QApplication>
+#include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //setCursor(Qt::PointingHandCursor);
+    QApplication::setOverrideCursor(QCursor(QPixmap(":/cursor/Cross.cur")));
 }
+
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
 }
 
 

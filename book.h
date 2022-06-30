@@ -15,7 +15,7 @@ public:
     int id;
 
     // return a bool to show whether has fallen
-    void move(int timer);
+    void move(double add_rate);
 
     bool deleted;
     void deleteEvent();
@@ -28,11 +28,15 @@ private:
     // speed
     int dir;
     // orientation
+    double my_time;
+    // begin time
+
+    int now_x, now_y; // current position
 
 signals:
     void fallen();
     void myClicked(int id);
 
-protected:
-    virtual QSize sizeHint() const;
+//protected:
+//    virtual QSize sizeHint() const;
 };
